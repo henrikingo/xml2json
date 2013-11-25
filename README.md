@@ -39,20 +39,23 @@ DETAILS
 
 An explanation of changes wrt the original library by Stefan Grössner follows:
 
-<e>text</e>
-{
-  "e":"text"
-}
+
+Consider the following 2 translations in the original library:
+
+    <e>text</e>
+    {
+      "e":"text"
+    }
 
 vs
 
-<e name="value">text</e>
-{
-  "e":{
-    "@name":"value",
-    "#text":"text"
-  }
-}
+    <e name="value">text</e>
+    {
+      "e":{
+        "@name":"value",
+        "#text":"text"
+      }
+    }
 
 => the path to "text" changes depending on whether the element has attributes 
    present or not. Very bad if there could be optional attributes, or attributes
@@ -62,71 +65,74 @@ For more examples, see http://goessner.net/download/prj/jsonxml/xmljson_test.htm
 
 Solution is to lift out attributes to be on the same level as the element itself:
 
-<e name="value">text</e>
-{
-  e@name:"value",
-  e:"text"
-}
+    <e name="value">text</e>
+    {
+      e@name:"value",
+      e:"text"
+    }
 
 Note that for empty elements, we still explicitly print null for clarity:
 
-<e name="value" />
-{
-  e@name:"value",
-  e:null
-}
+    <e name="value" />
+    {
+      e@name:"value",
+      e:null
+    }
 
 The other fix is to use lists to more closely resemble original xml structure
 in case of multiple children with same node name.
 
 Original:
 
-<e> <a>text</a> <a>text</a> </e>
-{
-  "e":{"a":[
-      "text",
-      "text"
-    ]}
-}
+    <e> <a>text</a> <a>text</a> </e>
+    {
+      "e":{"a":[
+          "text",
+          "text"
+        ]}
+    }
 
 Me:
 
 
-<e> <a>text</a> <a>text</a> </e>
-{
-  e:[
-        {
-      a:"text"
-    },
-        {
-      a:"text"
+    <e> <a>text</a> <a>text</a> </e>
+    {
+      e:[
+            {
+          a:"text"
+        },
+            {
+          a:"text"
+        }
+      ]
     }
-  ]
-}
 
 This approach allows to handle "mixed content" elements better, where original
 gives up:
 
-<a>x<c/>y</a>
-{
-  "a":"x<c/>y"
-}
+    <a>x<c/>y</a>
+    {
+      "a":"x<c/>y"
+    }
 
 Me:
 
-<a>x<c/>y</a>
-{
-  a:[
-    "x",
-        {
-      c:null
-    },
-    "y"
-  ]
-}
+    <a>x<c/>y</a>
+    {
+      a:[
+        "x",
+            {
+          c:null
+        },
+        "y"
+      ]
+    }
 
 (Same fix also supports CDATA sections, should there be any.)
 
+
+TODO
+----
 
 Not yet supported in xml->json:
 
