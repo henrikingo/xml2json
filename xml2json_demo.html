@@ -1,0 +1,55 @@
+<html>
+<head>
+<title> XML/JSON - Tests </title>
+<script type="text/javascript" src="xml2json.js"></script>
+<script type="text/javascript" src="json2xml.js"></script>
+<script type="text/javascript">
+
+
+function parseXml(xml) {
+   var dom = null;
+   if (window.DOMParser) {
+      try { 
+         dom = (new DOMParser()).parseFromString(xml, "text/xml"); 
+      } 
+      catch (e) { dom = null; }
+   }
+   else if (window.ActiveXObject) {
+      try {
+         dom = new ActiveXObject('Microsoft.XMLDOM');
+         dom.async = false;
+         if (!dom.loadXML(xml)) // parse error ..
+            window.alert(dom.parseError.reason + dom.parseError.srcText);
+      } 
+      catch (e) { dom = null; }
+   }
+   else
+      alert("oops");
+   return dom;
+}
+
+
+
+var doConvert = function() {
+   var xml = document.getElementById('xml_in').value;
+   // textarea.innerHTML returns xml in escaped format, need to unescape to make it real xml
+   xml = xml.replace(/&amp;/g, "&").replace(/&lt;/g,"<").replace(/&gt;/g,">");
+   alert(xml);
+   show( xml2json( parseXml(xml), "  ") );
+}
+window.onload = function() { doConvert(); }
+
+function show(s) { document.getElementById("out").innerHTML = s.replace(/&/g, "&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g, "<br/>"); }
+function hr() { document.getElementById("out").innerHTML += "<hr/>\n"; }
+
+</script>
+</head>
+
+<body>
+<textarea id="xml_in"><e>Hello World</e></textarea>
+<br />
+<input type="submit" value="convert" onclick="doConvert();" />
+<br />
+<pre id="out">...</pre>
+</body>
+</html>
