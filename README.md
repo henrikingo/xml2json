@@ -27,11 +27,12 @@ article linked above.
 USAGE
 -----
 
-For example usage, see xmljson_test.html.
+The xml2json library works both in a browser and node.js. (In node.js, it depends
+on libxml plugin.)
 
-The code itself also works and has been used as a node.js module together
-with the libxml parser, but you need to change a few lines to properly integrate
-as a node.js module (e.g. module.exports...)
+For example usage in a browser, see xmljson_demo.html
+
+For example usage in node.js, see http://github.com/henrikingo/node-xml2json
 
 
 DETAILS
@@ -151,8 +152,3 @@ actually possible to take the output of xml2json.js and translate it back to xml
 Multi-dimensional arrays. What is the correct xml presentation for this?
 
 { e : [["a", "b"], ["c", "d"]] }
-
-
-
-
-

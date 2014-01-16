@@ -5,7 +5,7 @@
 	Author:  Stefan Goessner/2006, Henrik Ingo/2013
 	Web:     https://github.com/henrikingo/xml2json 
 */
-function xml2json(xml, tab) {
+function createTranslator() {
    var X = {
       err: function(msg) {
          alert("Error: " + msg);
@@ -202,12 +202,29 @@ function xml2json(xml, tab) {
                n = n.nextSibling;
          }
          return e;
+      },
+      parseXml: function(xmlString) {
+         var dom = null;
+            var xml = require("libxml");
+            dom = xml.parseFromString(xmlString);
+         return dom;
       }
    };
+
+   return X;
+}
+
+function xml2json(xml, tab) {
+   var X = createTranslator();
    if (xml.nodeType == 9) // document node
       xml = xml.documentElement;
    var o = X.toObj(X.removeWhite(xml));
    var json = X.toJson(o, "");
    // If tab given, do pretty print, otherwise remove white space
    return (tab ? json.replace(/\t/g, tab) : json.replace(/\t|\n/g, ""));
+}
+
+// node.js
+if ( module ) {
+    module.exports = createTranslator();
 }

@@ -34,7 +34,6 @@ var doConvert = function() {
    var xml = document.getElementById('xml_in').value;
    // textarea.innerHTML returns xml in escaped format, need to unescape to make it real xml
    xml = xml.replace(/&amp;/g, "&").replace(/&lt;/g,"<").replace(/&gt;/g,">");
-   alert(xml);
    show( xml2json( parseXml(xml), "  ") );
 }
 window.onload = function() { doConvert(); }
@@ -46,7 +45,7 @@ function hr() { document.getElementById("out").innerHTML += "<hr/>\n"; }
 </head>
 
 <body>
-<textarea id="xml_in"><e>Hello World</e></textarea>
+<textarea rows="30" cols="120" id="xml_in"><e>Hello World</e></textarea>
 <br />
 <input type="submit" value="convert" onclick="doConvert();" />
 <br />
