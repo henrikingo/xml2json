@@ -135,8 +135,6 @@ Me:
 TODO
 ----
 
-Not yet supported in xml->json:
-
 All types are strings. Preferably types would be defined in xml schema, and 
 the xml parser would return node values in correct javascript type. If this is
 not the case, we can emulate something by converting strings to other types in 
@@ -145,9 +143,6 @@ For database searches, having the correct types will help.
 
 
 Not yet supported in json->xml:
-
-I have not yet made the corresponding changes to json2xml.js module, so it's not
-actually possible to take the output of xml2json.js and translate it back to xml.
 
 Multi-dimensional arrays. What is the correct xml presentation for this?
 

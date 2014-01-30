@@ -30,25 +30,50 @@ function parseXml(xml) {
 
 
 
-var doConvert = function() {
-   var xml = document.getElementById('xml_in').value;
-   // textarea.innerHTML returns xml in escaped format, need to unescape to make it real xml
-   xml = xml.replace(/&amp;/g, "&").replace(/&lt;/g,"<").replace(/&gt;/g,">");
-   show( xml2json( parseXml(xml), "  ") );
+var convertXml = function() {
+   document.getElementById('json').value = "If you can still see this text, then something didn't work...";
+   var xml = document.getElementById('xml').value;
+   var json = xml2json( parseXml(xml), "  ");
+   showJson(json);
 }
-window.onload = function() { doConvert(); }
 
-function show(s) { document.getElementById("out").innerHTML = s.replace(/&/g, "&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g, "<br/>"); }
-function hr() { document.getElementById("out").innerHTML += "<hr/>\n"; }
+var convertJson = function() {
+   document.getElementById('xml').value = "If you can still see this text, then something didn't work...";
+   var json = document.getElementById('json').value;
+   var xml = json2xml( json, "  ");
+   showXml(xml);
+}
+
+
+
+window.onload = function() { convertXml(); }
+
+function showJson(s) { document.getElementById("json").value = s.replace(/&/g, "&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function showXml(s)  { document.getElementById("xml").value  = s; s.replace(/&/g, "&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
 </script>
 </head>
 
 <body>
-<textarea rows="30" cols="120" id="xml_in"><e>Hello World</e></textarea>
+<table border="0">
+<tr>
+  <td>
+    <p>XML</p>
+    <textarea rows="30" cols="80" id="xml"><e>Hello World</e></textarea>
+  </td>
+  <td>
+    <input type="submit" value="->" onclick="convertXml();" />
+    <br />
+    <input type="submit" value="<-" onclick="convertJson();" />
+  </td>
+  <td>
+    <p>JSON</p>
+    <textarea rows="30" cols="80" id="json">...</textarea>
+  </td>  
+</table>
+
 <br />
-<input type="submit" value="convert" onclick="doConvert();" />
+
 <br />
-<pre id="out">...</pre>
 </body>
 </html>

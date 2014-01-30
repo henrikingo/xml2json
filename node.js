@@ -9,13 +9,12 @@
 
 // Node.js entry file, contains only Node.js specific things
 
-var clone = require('clone'); 
-var debug = module.parent.exports.debug; 
+// why is this here?
+//var clone = require('clone'); 
 
 
-var xml2json = module.exports = require('./xml2json.js');
-
-debug("xml2json is loaded");
+var xml2json = module.exports.xml2json = require('./xml2json.js');
+var json2xml = module.exports.json2xml = require('./json2xml.js');
 
 
 // Add 2 node.js middleware filters
@@ -35,7 +34,7 @@ module.exports.rawBodyParser = function( req, res, next ) {
     });
     return next();
 };
-  
+
 /**
  * When req.body contains application/xml, translate it to Json and put into req.params
  */

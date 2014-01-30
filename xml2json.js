@@ -5,7 +5,7 @@
 	Author:  Stefan Goessner/2006, Henrik Ingo/2013
 	Web:     https://github.com/henrikingo/xml2json 
 */
-function createTranslator() {
+function xml2json_translator() {
    var X = {
       err: function(msg) {
          alert("Error: " + msg);
@@ -135,7 +135,7 @@ function createTranslator() {
                 i++;
             // ...so that we know when we are at the last element when doing this
             for (var member in o) {
-                json += "\n"+ ind + "\t" + member + ":" + X.toJson(o[member], ind+"\t");
+                json += "\n"+ ind + "\t\"" + member + "\":" + X.toJson(o[member], ind+"\t");
                 json += (i > 1 ? "," : "\n"+ind ); 
                 i--;
             }
@@ -215,7 +215,7 @@ function createTranslator() {
 }
 
 function xml2json(xml, tab) {
-   var X = createTranslator();
+   var X = xml2json_translator();
    if (xml.nodeType == 9) // document node
       xml = xml.documentElement;
    var o = X.toObj(X.removeWhite(xml));
@@ -225,6 +225,6 @@ function xml2json(xml, tab) {
 }
 
 // node.js
-if ( module ) {
-    module.exports = createTranslator();
+if ( typeof module != 'undefined' ) {
+    module.exports = xml2json_translator();
 }
