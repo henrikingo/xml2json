@@ -7,7 +7,11 @@
 */
 function json2xml_translator() {
  var X = {
-   toXml: function(v, name=null, ind="", mySiblingAttrs = {}) {
+   toXml: function(v, name, ind, mySiblingAttrs) {
+      if ( typeof name == 'undefined' ) name = null;
+      if ( typeof ind  == 'undefined' ) ind="";
+      if ( typeof mySiblingAttrs == 'undefined' ) mySiblingAttrs = {};
+      
       var xml = "";
 
       if (v instanceof Array) {
